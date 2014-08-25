@@ -1,0 +1,19 @@
+{
+    "name": "cabbage/yii2-kindeditor",
+    "description": "kindeditor in yii2",
+    "authors": [
+        {
+            "name": "cabbage",
+            "email": "251949141@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "cabbage\\yii2-kindeditor\\": ""
+        }
+    }
+}
