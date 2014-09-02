@@ -2,6 +2,7 @@
 
 namespace cabbage\kindeditor\controllers;
 
+use cabbage\kindeditor\models\Upload;
 use frontend\models\Article;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
@@ -16,9 +17,9 @@ class DefaultController extends Controller
     {
         $file = UploadedFile::getInstanceByName('imgFile');
 
-        $basePath = \Yii::getAlias('@common/..');
+        $basePath = dirname(\Yii::getAlias('@common'));
         $date = date("Y{$this->separator}m", time());
-        $uploadPath = "/Uploads/Attachment/{$date}";
+        $uploadPath = "Uploads/Attachment/{$date}";
 
         if(!is_dir($basePath . "/" . $uploadPath)){
             FileHelper::createDirectory($basePath . "/" . $uploadPath);
@@ -29,11 +30,27 @@ class DefaultController extends Controller
         }else{
             $filename = $file->name;
         }
+        $uploadData = [
+            'type' => $file->type,
+            'name' => $filename,
+            'size' => $file->size,
+            'path' => "/" . $uploadPath,
 
-        if($file->saveAs($basePath . '/' . $uploadPath . '/' . $filename)){
-            return Json::encode(array('error' => 0, 'url' => $uploadPath . '/' .$filename));
+            'module' => $this->action->controller->module->uniqueId,
+            'controller' => $this->action->controller->uniqueId,
+            'action' => $this->action->uniqueId,
+
+            'user_id' => \Yii::$app->user->isGuest ? 0 : \Yii::$app->user->identity->id,
+        ];
+        $model = new Upload();
+
+        $model->setAttributes($uploadData);
+        $model->validate();
+
+        if($model->save() && $file->saveAs($basePath . '/' . $uploadPath . '/' . $filename)){
+            return Json::encode(array('error' => 0, 'url' => "/" . $uploadPath . '/' .$filename));
         }else{
-            return Json::encode(array('error' => 1, 'msg' => "上传失败"));
+            return Json::encode(array('error' => 1, 'msg' => Json::encode($model->getErrors())));
         }
 
     }
