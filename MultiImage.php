@@ -104,8 +104,7 @@ STR;
 					editor.loadPlugin('multiimage', function() {
 						editor.plugin.multiImageDialog({
 							clickFn : function(urlList) {
-								var div = K('#{$this->id}-view');
-								div.html('');
+								var div = $('#{$this->id}-view');
 								K.each(urlList, function(i, data) {
 									div.append('<li id="li_'+data.id+'"><img src="'+data.url+'" width="80" height="80" /><a href="javascript:;" onclick="removeImage("#{$this->id}",'+data.id+')"><span class="del">delete</span></a></li>');
 									// 动态设置数目
