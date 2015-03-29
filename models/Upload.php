@@ -30,13 +30,13 @@ class Upload extends \yii\db\ActiveRecord
         return 'uploads';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('thinkox');
-    }
+//    /**
+//     * @return \yii\db\Connection the database connection used by this AR class.
+//     */
+//    public static function getDb()
+//    {
+//        return Yii::$app->get('mrdadatour');
+//    }
 
     /**
      * @inheritdoc

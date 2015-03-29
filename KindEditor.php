@@ -72,8 +72,8 @@ class KindEditor extends InputWidget
 		$view = $this->getView();
 
         $asset = KindEditorAsset::register($view);
-        $asset->js[] = 'lang/' . $this->language . '.js';
-        $asset->js[] = 'plugins/image/image.js';
+        $asset->js[] = 'kindeditor/lang/' . $this->language . '.js';
+        $asset->js[] = 'kindeditor/plugins/image/image.js';
 
 
 

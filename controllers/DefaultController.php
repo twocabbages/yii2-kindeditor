@@ -36,9 +36,9 @@ class DefaultController extends Controller
             'size' => $file->size,
             'path' => "/" . $uploadPath,
 
-            'module' => $this->action->controller->module->uniqueId,
-            'controller' => $this->action->controller->uniqueId,
-            'action' => $this->action->uniqueId,
+            'module' => null,//$this->action->controller->module->uniqueId,
+            'controller' => null,//$this->action->controller->uniqueId,
+            'action' => null,//$this->action->uniqueId,
 
             'user_id' => \Yii::$app->user->isGuest ? 0 : \Yii::$app->user->identity->id,
         ];
@@ -48,7 +48,7 @@ class DefaultController extends Controller
         $model->validate();
 
         if($model->save() && $file->saveAs($basePath . '/' . $uploadPath . '/' . $filename)){
-            return Json::encode(array('error' => 0, 'url' => "/" . $uploadPath . '/' .$filename));
+            return Json::encode(array('error' => 0, 'url' => "/" . $uploadPath . '/' .$filename, 'id' => $model->id, 'name'=>$file->name));
         }else{
             return Json::encode(array('error' => 1, 'msg' => Json::encode($model->getErrors())));
         }

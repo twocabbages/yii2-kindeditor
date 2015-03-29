@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-
+//
 class m140825_073859_CreateTableUploads extends Migration
 {
     public function up()
